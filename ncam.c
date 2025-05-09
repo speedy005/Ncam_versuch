@@ -386,29 +386,46 @@ static void write_versionfile(bool use_stdout)
 		struct tm st;
 		time_t walltime = cs_time();
 		localtime_r(&walltime, &st);
-		fprintf(fp, "Unix Starttime: %ld\n", walltime);
-		fprintf(fp, "Starttime:      %02d.%02d.%04d %02d:%02d:%02d\n",
+		fprintf(fp, "Unix Starttime:    %ld\n", walltime);
+		fprintf(fp, "Starttime:         %02d.%02d.%04d %02d:%02d:%02d\n",
 				st.tm_mday, st.tm_mon + 1, st.tm_year + 1900,
 				st.tm_hour, st.tm_min, st.tm_sec);
 	}
-	fprintf(fp, "Build Date:     %s\n", CS_BUILD_DATE);
-#ifdef MODULE_STREAMRELAY
-	fprintf(fp, "Version:        NCam-%s-StreamRelay\n", CS_VERSION);
-#else
-	fprintf(fp, "Version:        NCam-%s\n", CS_VERSION);
-#endif
-	fprintf(fp, "Revision:       %s\n", CS_REVISION);
-	fprintf(fp, "Build:          %s\n", CS_DATE_BUILD);
+	fprintf(fp,   "Build Date:        %s\n", CS_BUILD_DATE);
+fprintf(fp,   "Version:           %s@%s\n", CS_VERSION,  "-with Streamrelay build by bonecrew");
+		fprintf(fp, "Compiled by:       %s\n", "Simplebuild 3 bonecrew");
+	        fprintf(fp, "S3 mit:            -ggdb -pipe -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-schedule-insns \n");
+		fprintf(fp, "Copyright:         %s\n", "by bonecrew 2024");
+	        fprintf(fp, "compiler_option    -O2   \n");
+		fprintf(fp, "compress           nein   \n");
+		fprintf(fp, "Toolchain          armv7a by bonecrew \n");
+		fprintf(fp, "Bibliothek         LIB_SSL 3.5.0 \n");
+		fprintf(fp, "Bibliothek         LIB_USB 1.0.28 \n");
+		fprintf(fp, "Bibliothek         LIB_PCSC_Lite 2.3.3 \n");
+        fprintf(fp, "Bibliothek         LIB_ZLIB 1.3.1 \n");
+        fprintf(fp, "Bibliothek         LIB_DVBCSA 1.1.1 \n");
+        fprintf(fp, "Bibliothek         LIB_CURL 8.13.0 \n");
+        fprintf(fp, "Bibliothek         LIB_CCID 1.6.2 \n");
+        fprintf(fp, "Options            webif-dvbapi-ssl-libusb-pcsc-libdvbcsa-streamrelay-neon-extra \n");
+        fprintf(fp, "Patch              nein \n");
+		fprintf(fp, "Patch              nein \n");
+		fprintf(fp, "Patch              nein \n");
+		fprintf(fp, "Neon               ja / 128 \n");
+ 	    fprintf(fp, "TempDir:           %s\n", cs_tmpdir);
+ 	    fprintf(fp, "Box type:          %s (%s)\n", boxtype_get(), boxname_get());
+ 	    fprintf(fp, "PID:               %d\n", getppid());
+        fprintf(fp, "Revision:          %s\n", CS_REVISION);
+	    fprintf(fp, "Build:             %s\n", CS_DATE_BUILD);
 #ifdef CS_CACHEEX_AIO
-	fprintf(fp, "Cache exchange: %s\n", CS_AIO_VERSION);
+	fprintf(fp,   "Cache exchange:    %s\n", CS_AIO_VERSION);
 #endif
-	fprintf(fp, "Compiler:       %s\n", CS_TARGET);
+	fprintf(fp,   "Compiler:          %s\n", CS_TARGET);
 #ifdef USE_COMPRESS
-	fprintf(fp, "Compression:    %s, level %s\n", COMP_VERSION, COMP_LEVEL);
+	fprintf(fp,   "Compression:       %s, level %s\n", COMP_VERSION, COMP_LEVEL);
 #endif
-	fprintf(fp, "Box Type:       %s (%s)\n", boxtype_get(), boxname_get());
-	fprintf(fp, "PID:            %d\n", getppid());
-	fprintf(fp, "TempDir:        %s\n", cs_tmpdir);
+	fprintf(fp,   "Box Type:          %s (%s)\n", boxtype_get(), boxname_get());
+	fprintf(fp,   "PID:               %d\n", getppid());
+	fprintf(fp,   "TempDir:           %s\n", cs_tmpdir);
 #ifdef MODULE_GBOX
 	if(cfg.gbox_tmp_dir == NULL)
 	{
